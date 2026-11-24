@@ -597,7 +597,7 @@
       </div>
     </div>
   </main>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script>
     // Toast Helper
     function showToast(msg) {
@@ -679,10 +679,49 @@
       showToast('Calendar invite downloaded');
     });
 
-    // Download Invitation as PDF
-    document.getElementById('download-invite-btn').addEventListener('click', () => {
-      showToast('Choose "Save as PDF" as the destination');
-      setTimeout(() => window.print(), 600);
+    // Download Invitation as Image
+    document.getElementById('download-invite-btn').addEventListener('click', async () => {
+      const target = document.querySelector('main > div');
+      showToast('Preparing your image...');
+      try {
+        const canvas = await html2canvas(target, {
+          scale: 2,
+          useCORS: true,
+          backgroundColor: '#FDFCFA',
+          // Leave out the map, the Maps button and the RSVP form
+          ignoreElements: (el) =>
+            el.tagName === 'IFRAME' ||
+            el.id === 'rsvp-section' ||
+            el.classList.contains('no-print'),
+          onclone: (doc) => {
+            // Show every section (the scroll animation would otherwise hide some)
+            doc.querySelectorAll('.reveal-section').forEach((el) => {
+              el.style.opacity = '1';
+              el.style.transform = 'none';
+              el.style.transition = 'none';
+            });
+            // html2canvas can't draw gradient-filled text, so use solid gold
+            doc.querySelectorAll('.gold-foil-text').forEach((el) => {
+              el.style.background = 'none';
+              el.style.webkitTextFillColor = '#B8923F';
+              el.style.color = '#B8923F';
+              el.style.animation = 'none';
+            });
+            // Blurred corner glows would show up as hard-edged circles, so remove them
+            doc.querySelectorAll('.blur-3xl').forEach((el) => el.remove());
+            doc.querySelectorAll('.animate-spin-slow, .animate-float').forEach((el) => {
+              el.style.animation = 'none';
+            });
+          }
+        });
+        const link = document.createElement('a');
+        link.download = 'Baptism-of-Neil-Sajan-Invitation.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        showToast('Invitation downloaded');
+      } catch (err) {
+        showToast('Could not create the image. Try again.');
+      }
     });
    
     // Google Form connection
