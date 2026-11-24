@@ -169,16 +169,16 @@
     </button>
 
     <button
-      id="share-invite-btn"
-      type="button"
-      aria-label="Share invitation"
-      class="pointer-events-auto flex items-center gap-2 bg-white/90 backdrop-blur-md border border-gold/40 text-charcoal px-3.5 py-2 rounded-full shadow-sm hover:border-gold transition text-xs sm:text-sm font-medium"
-    >
-      <svg class="w-4 h-4 text-gold-dark" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-      </svg>
-      <span class="tracking-wide text-xs">Share</span>
-    </button>
+    id="download-invite-btn"
+    type="button"
+    aria-label="Download invitation"
+    class="pointer-events-auto flex items-center gap-2 bg-white/90 backdrop-blur-md border border-gold/40 text-charcoal px-3.5 py-2 rounded-full shadow-sm hover:border-gold transition text-xs sm:text-sm font-medium"
+  >
+    <svg class="w-4 h-4 text-gold-dark" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+    </svg>
+    <span class="tracking-wide text-xs">Download</span>
+  </button>
   </header>
 
   <div
@@ -531,6 +531,7 @@
     </div>
   </main>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script>
     // Toast Helper
     function showToast(msg) {
@@ -612,23 +613,45 @@
       showToast('Calendar invite downloaded');
     });
 
-    // Share Button
-    document.getElementById('share-invite-btn').addEventListener('click', async () => {
-      const shareData = {
-        title: 'Baptism of Neil Sajan',
-        text: 'You are invited to the Holy Baptism of Neil Sajan on Monday, 30 November 2026.',
-        url: window.location.href
-      };
-      if (navigator.share) {
-        try {
-          await navigator.share(shareData);
-          return;
-        } catch (_) {}
+    // Download Invitation as Image
+    document.getElementById('download-invite-btn').addEventListener('click', async () => {
+      const target = document.querySelector('main > div');
+      showToast('Preparing your download...');
+      try {
+        const canvas = await html2canvas(target, {
+          scale: 2,
+          useCORS: true,
+          backgroundColor: '#FDFCFA',
+          // Leave out the map and the RSVP form; they don't belong in a saved invitation
+          ignoreElements: (el) => el.tagName === 'IFRAME' || el.id === 'rsvp-section',
+          onclone: (doc) => {
+            doc.querySelectorAll('.reveal-section').forEach((el) => {
+              el.style.opacity = '1';
+              el.style.transform = 'none';
+              el.style.transition = 'none';
+            });
+            // html2canvas can't draw gradient-filled text, so use a solid gold instead
+            doc.querySelectorAll('.gold-foil-text').forEach((el) => {
+              el.style.background = 'none';
+              el.style.webkitTextFillColor = '#B8923F';
+              el.style.color = '#B8923F';
+              el.style.animation = 'none';
+            });
+            doc.querySelectorAll('.animate-spin-slow, .animate-float').forEach((el) => {
+              el.style.animation = 'none';
+            });
+          }
+        });
+        const link = document.createElement('a');
+        link.download = 'Baptism-of-Neil-Sajan-Invitation.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        showToast('Invitation downloaded');
+      } catch (err) {
+        showToast('Could not create the image. Try again.');
       }
-      navigator.clipboard?.writeText(window.location.href);
-      showToast('Link copied to clipboard');
     });
-
+   
     // Google Form connection
     const GFORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSemk6JYYatmJOGm5IvSWCsxjJArnqLKJ777XV7t0p89ACLbFg/formResponse';
     const GFORM_FIELDS = {
