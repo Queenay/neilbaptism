@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Baptism of Neil Sajan — Invitation</title>
+
+  <!-- Google Fonts: Cinzel, Cormorant Garamond, Great Vibes & Montserrat -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Custom Tailwind Configuration & Luxury Gold Styles -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ivory: '#FDFCFA',
+            gold: {
+              light: '#F3E5AB',
+              DEFAULT: '#C5A059',
+              rich: '#D4AF37',
+              dark: '#9E7B34',
+            },
+            sage: {
+              light: '#EBF0EC',
+              DEFAULT: '#7A9A7E',
+              dark: '#5F7D63',
+            },
+            charcoal: '#2C2A27',
+          },
+          fontFamily: {
+            display: ['Cinzel', 'serif'],
+            serif: ['Cormorant Garamond', 'serif'],
+            script: ['Great Vibes', 'cursive'],
+            sans: ['Montserrat', 'sans-serif'],
+          },
+          boxShadow: {
+            gold: '0 10px 35px -5px rgba(197, 160, 89, 0.22)',
+            'gold-lg': '0 20px 50px -10px rgba(197, 160, 89, 0.35)',
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    body {
+      background-color: #FDFCFA;
+      color: #2C2A27;
+      overflow-x: hidden;
+      background-image:
+        radial-gradient(circle at 12% 10%, rgba(243, 229, 171, 0.28) 0%, transparent 42%),
+        radial-gradient(circle at 88% 22%, rgba(122, 154, 126, 0.12) 0%, transparent 38%),
+        radial-gradient(circle at 50% 65%, rgba(212, 175, 55, 0.14) 0%, transparent 50%),
+        radial-gradient(circle at 85% 90%, rgba(243, 229, 171, 0.25) 0%, transparent 45%);
+    }
+
+    .gold-foil-text {
+      background: linear-gradient(
+        135deg,
+        #9E7B34 0%,
+        #D4AF37 25%,
+        #F3E5AB 50%,
+        #C5A059 75%,
+        #8F6B26 100%
+      );
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: goldShimmer 6s linear infinite;
+    }
+
+    @keyframes goldShimmer {
+      0% { background-position: 0% center; }
+      100% { background-position: 200% center; }
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, #C5A059 0%, #DFC078 50%, #B38B40 100%);
+      background-size: 200% auto;
+      transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .btn-gold:hover {
+      background-position: right center;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px -6px rgba(197, 160, 89, 0.48);
+    }
+
+    .btn-gold:active {
+      transform: translateY(0);
+    }
+
+    @keyframes slowSpin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .animate-spin-slow {
+      animation: slowSpin 38s linear infinite;
+    }
+
+    @keyframes gentleFloat {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-6px) rotate(1.5deg); }
+    }
+
+    .animate-float {
+      animation: gentleFloat 6s ease-in-out infinite;
+    }
+
+    .reveal-section {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .reveal-section.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    #gold-dust-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #FDFCFA;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #D4AF37;
+      border-radius: 9999px;
+    }
+  </style>
+</head>
+<body class="font-sans antialiased selection:bg-gold-light selection:text-charcoal relative min-h-screen">
+
+  <!-- Custom Background Music Element (replace src with your .mp3 / .m4a URL or repo path) -->
+  <audio id="custom-music" src="https://github.com/Queenay/neilbaptism/blob/main/song.mp3" loop preload="metadata"></audio>
+
+  <canvas id="gold-dust-canvas" aria-hidden="true"></canvas>
+
+  <header class="fixed top-0 inset-x-0 z-40 pointer-events-none px-4 py-3 sm:px-8 sm:py-4 flex items-center justify-between max-w-5xl mx-auto">
+    <button
+      id="music-toggle-btn"
+      type="button"
+      aria-label="Toggle background music"
+      class="pointer-events-auto flex items-center gap-2 bg-white/90 backdrop-blur-md border border-gold/40 text-charcoal px-3.5 py-2 rounded-full shadow-sm hover:border-gold transition text-xs sm:text-sm font-medium"
+    >
+      <span id="music-icon" class="text-gold-dark flex items-center justify-center">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2z" />
+        </svg>
+      </span>
+      <span id="music-label" class="tracking-wide text-xs">Music Off</span>
+    </button>
+
+    <button
+      id="share-invite-btn"
+      type="button"
+      aria-label="Share invitation"
+      class="pointer-events-auto flex items-center gap-2 bg-white/90 backdrop-blur-md border border-gold/40 text-charcoal px-3.5 py-2 rounded-full shadow-sm hover:border-gold transition text-xs sm:text-sm font-medium"
+    >
+      <svg class="w-4 h-4 text-gold-dark" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+      </svg>
+      <span class="tracking-wide text-xs">Share</span>
+    </button>
+  </header>
+
+  <div
+    id="toast-banner"
+    role="status"
+    aria-live="polite"
+    class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 opacity-0 pointer-events-none transition-all duration-300 translate-y-4 bg-white/95 backdrop-blur-md border border-gold text-charcoal px-5 py-3 rounded-full shadow-gold flex items-center gap-2.5 text-sm font-medium max-w-[90vw]"
+  >
+    <span class="w-2 h-2 rounded-full bg-gold-rich shrink-0"></span>
+    <span id="toast-message">Notification message</span>
+  </div>
+
+  <main class="relative z-20 max-w-3xl mx-auto px-4 sm:px-6 pt-16 pb-20 sm:pt-20 sm:pb-28">
+    <div class="bg-white/90 backdrop-blur-sm rounded-[2rem] sm:rounded-[2.5rem] border border-gold/40 shadow-gold-lg p-2.5 sm:p-4">
+      <div class="rounded-[1.6rem] sm:rounded-[2.1rem] border border-gold/60 px-5 py-10 sm:px-12 sm:py-14 relative overflow-hidden">
+
+        <div class="absolute -top-24 -left-24 w-64 h-64 rounded-full bg-gold-light/25 blur-3xl pointer-events-none"></div>
+        <div class="absolute -top-20 -right-20 w-56 h-56 rounded-full bg-sage-light/50 blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-24 -right-24 w-64 h-64 rounded-full bg-gold-light/25 blur-3xl pointer-events-none"></div>
+
+        <!-- 1. HERO SECTION & PORTRAIT -->
+        <section class="text-center relative reveal-section is-visible">
+          <div class="flex flex-col items-center justify-center mb-6">
+            <div class="flex items-center gap-3 mb-2">
+              <span class="h-[1px] w-10 sm:w-16 bg-gradient-to-r from-transparent to-gold"></span>
+              <svg class="w-7 h-9 text-gold-rich drop-shadow-sm" viewBox="0 0 36 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 2V46M7 15H29" stroke="url(#crossGrad)" stroke-width="2.2" stroke-linecap="round"/>
+                <circle cx="18" cy="15" r="2.2" fill="#F3E5AB" stroke="#C5A059" stroke-width="1"/>
+                <defs>
+                  <linearGradient id="crossGrad" x1="7" y1="2" x2="29" y2="46" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#D4AF37"/>
+                    <stop offset="0.5" stop-color="#F3E5AB"/>
+                    <stop offset="1" stop-color="#9E7B34"/>
+                  </linearGradient>
+                </defs>
+              </svg>
+              <span class="h-[1px] w-10 sm:w-16 bg-gradient-to-l from-transparent to-gold"></span>
+            </div>
+            <p class="font-display text-[11px] sm:text-xs tracking-[0.32em] uppercase text-gold-dark font-medium">
+              Sacred Sacrament of Holy Baptism
+            </p>
+          </div>
+
+          <div class="relative w-64 h-64 sm:w-80 sm:h-80 mx-auto my-6 sm:my-8 flex items-center justify-center">
+            <div class="absolute inset-0 rounded-full border border-dashed border-gold/60 animate-spin-slow pointer-events-none"></div>
+            <div class="absolute inset-2.5 rounded-full border border-gold/40 pointer-events-none"></div>
+
+            <svg class="w-24 h-28 sm:w-28 sm:h-32 absolute -top-3 -left-3 sm:-top-4 sm:-left-4 z-20 animate-float pointer-events-none" viewBox="0 0 120 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M98 18C68 34 42 64 24 106" stroke="#7A9A7E" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M74 34C62 24 48 26 44 36C55 41 67 40 74 34Z" fill="#7A9A7E" fill-opacity="0.32" stroke="#5F7D63" stroke-width="1.2"/>
+              <path d="M55 54C41 44 27 48 24 59C36 63 48 61 55 54Z" fill="#7A9A7E" fill-opacity="0.28" stroke="#5F7D63" stroke-width="1.2"/>
+              <path d="M39 76C25 69 13 75 12 86C24 89 34 84 39 76Z" fill="#7A9A7E" fill-opacity="0.24" stroke="#5F7D63" stroke-width="1.2"/>
+              <path d="M84 27C88 15 99 10 108 14C103 24 93 29 84 27Z" fill="#F3E5AB" stroke="#C5A059" stroke-width="1.2"/>
+              <path d="M64 44C72 34 84 33 91 40C82 47 71 48 64 44Z" fill="#F3E5AB" fill-opacity="0.85" stroke="#C5A059" stroke-width="1.2"/>
+              <path d="M46 66C55 58 67 59 73 67C63 72 52 72 46 66Z" fill="#F3E5AB" fill-opacity="0.7" stroke="#C5A059" stroke-width="1.2"/>
+            </svg>
+
+            <svg class="w-24 h-28 sm:w-28 sm:h-32 absolute -bottom-3 -right-3 sm:-bottom-4 sm:-right-4 z-20 animate-float pointer-events-none" style="animation-delay: 1.5s;" viewBox="0 0 120 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M22 112C52 96 78 66 96 24" stroke="#7A9A7E" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M46 96C58 106 72 104 76 94C65 89 53 90 46 96Z" fill="#7A9A7E" fill-opacity="0.32" stroke="#5F7D63" stroke-width="1.2"/>
+              <path d="M65 76C79 86 93 82 96 71C84 67 72 69 65 76Z" fill="#7A9A7E" fill-opacity="0.28" stroke="#5F7D63" stroke-width="1.2"/>
+              <path d="M81 54C95 61 107 55 108 44C96 41 86 46 81 54Z" fill="#7A9A7E" fill-opacity="0.24" stroke="#5F7D63" stroke-width="1.2"/>
+              <path d="M36 103C32 115 21 120 12 116C17 106 27 101 36 103Z" fill="#F3E5AB" stroke="#C5A059" stroke-width="1.2"/>
+              <path d="M56 86C48 96 36 97 29 90C38 83 49 82 56 86Z" fill="#F3E5AB" fill-opacity="0.85" stroke="#C5A059" stroke-width="1.2"/>
+              <path d="M74 64C65 72 53 71 47 63C57 58 68 58 74 64Z" fill="#F3E5AB" fill-opacity="0.7" stroke="#C5A059" stroke-width="1.2"/>
+            </svg>
+
+            <div class="relative w-52 h-52 sm:w-64 sm:h-64 rounded-full p-1.5 bg-gradient-to-tr from-gold-dark via-gold-light to-gold-rich shadow-gold">
+              <div class="w-full h-full rounded-full overflow-hidden bg-white relative">
+                <img
+                  id="baby-portrait-img"
+                  src="https://github.com/Queenay/neilbaptism/blob/main/photo.jpeg"
+                  alt=""
+                  class="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-105"
+                />
+                <div class="absolute inset-0 rounded-full ring-1 ring-inset ring-gold/30 pointer-events-none"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="space-y-2.5 mt-4 max-w-lg mx-auto">
+            <p class="font-serif italic text-xl sm:text-2xl text-charcoal/85 tracking-wide leading-relaxed">
+              With joyful hearts, We invite you to the
+            </p>
+            <p class="font-display text-sm sm:text-base tracking-[0.28em] uppercase text-gold-dark font-semibold">
+              Holy Baptism of our beloved son
+            </p>
+            <h1 class="font-script text-6xl sm:text-7xl md:text-8xl gold-foil-text py-2 leading-tight drop-shadow-sm">
+              Neil Sajan
+            </h1>
+          </div>
+
+          <div class="flex items-center justify-center gap-3 my-7">
+            <span class="h-[1px] w-16 sm:w-24 bg-gradient-to-r from-transparent via-gold/60 to-gold"></span>
+            <span class="w-2 h-2 rotate-45 border border-sage-dark bg-sage-light"></span>
+            <span class="w-2.5 h-2.5 rotate-45 bg-gold-rich"></span>
+            <span class="w-2 h-2 rotate-45 border border-sage-dark bg-sage-light"></span>
+            <span class="h-[1px] w-16 sm:w-24 bg-gradient-to-l from-transparent via-gold/60 to-gold"></span>
+          </div>
+        </section>
+
+        <!-- 2. EVENT DATE, TIME & LIVE COUNTDOWN -->
+        <section class="text-center my-8 sm:my-10 reveal-section">
+          <div class="bg-ivory/90 border border-gold/40 rounded-3xl px-4 py-7 sm:px-8 sm:py-9 shadow-sm relative">
+            <p class="font-display text-xs tracking-[0.25em] uppercase text-sage-dark font-semibold mb-4">
+              Save The Sacred Date
+            </p>
+
+            <div class="grid grid-cols-3 items-center max-w-md mx-auto my-2">
+              <div class="border-y border-gold/50 py-2.5">
+                <span class="font-display text-xs sm:text-sm tracking-[0.22em] font-semibold text-charcoal">
+                  MONDAY
+                </span>
+              </div>
+
+              <div class="px-2">
+                <span class="font-serif text-5xl sm:text-6xl font-bold gold-foil-text leading-none block">
+                  30
+                </span>
+              </div>
+
+              <div class="border-y border-gold/50 py-2.5">
+                <span class="font-display text-xs sm:text-sm tracking-[0.22em] font-semibold text-charcoal">
+                  NOVEMBER
+                </span>
+              </div>
+            </div>
+
+            <p class="font-display text-sm sm:text-base tracking-[0.25em] text-gold-dark font-semibold mt-4">
+              2026 &bull; AT 7:00 AM
+            </p>
+
+            <div class="mt-7 pt-6 border-t border-gold/25">
+              <p class="text-[11px] uppercase tracking-[0.22em] text-charcoal/60 mb-3.5 font-medium">
+                Counting Down to the Blessing
+              </p>
+              <div id="countdown-grid" class="grid grid-cols-4 gap-2 sm:gap-4 max-w-sm mx-auto">
+                <div class="bg-white border border-gold/35 rounded-2xl py-2.5 px-1 shadow-sm">
+                  <span id="cd-days" class="font-serif text-2xl sm:text-3xl font-bold text-gold-dark block leading-none">00</span>
+                  <span class="text-[10px] uppercase tracking-widest text-charcoal/65 mt-1 block">Days</span>
+                </div>
+                <div class="bg-white border border-gold/35 rounded-2xl py-2.5 px-1 shadow-sm">
+                  <span id="cd-hours" class="font-serif text-2xl sm:text-3xl font-bold text-gold-dark block leading-none">00</span>
+                  <span class="text-[10px] uppercase tracking-widest text-charcoal/65 mt-1 block">Hours</span>
+                </div>
+                <div class="bg-white border border-gold/35 rounded-2xl py-2.5 px-1 shadow-sm">
+                  <span id="cd-minutes" class="font-serif text-2xl sm:text-3xl font-bold text-gold-dark block leading-none">00</span>
+                  <span class="text-[10px] uppercase tracking-widest text-charcoal/65 mt-1 block">Mins</span>
+                </div>
+                <div class="bg-white border border-gold/35 rounded-2xl py-2.5 px-1 shadow-sm">
+                  <span id="cd-seconds" class="font-serif text-2xl sm:text-3xl font-bold text-gold-dark block leading-none">00</span>
+                  <span class="text-[10px] uppercase tracking-widest text-charcoal/65 mt-1 block">Secs</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-7 flex flex-wrap items-center justify-center gap-3">
+              <a
+                href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Baptism+of+Neil+Sajan&dates=20261130T013000Z/20261130T033000Z&details=Please+join+us+for+the+Holy+Baptism+of+Neil+Sajan.+We+appreciate+your+presence+and+blessings.&location=St.+Peter's+and+St.+Paul's+Orthodox+Church,+Parumala,+Kerala+689626,+India"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 bg-white border border-gold text-charcoal hover:bg-gold-light/25 px-4 py-2.5 rounded-full text-xs sm:text-sm font-medium transition shadow-sm"
+              >
+                <svg class="w-4 h-4 text-gold-dark" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span>Google Calendar</span>
+              </a>
+
+              <button
+                id="download-ics-btn"
+                type="button"
+                class="inline-flex items-center gap-2 bg-white border border-sage/50 text-sage-dark hover:bg-sage-light/40 px-4 py-2.5 rounded-full text-xs sm:text-sm font-medium transition shadow-sm"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+                <span>Download .ICS Invite</span>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- 3. VENUE & INTERACTIVE GOOGLE MAP SECTION -->
+        <section class="text-center my-10 sm:my-12 reveal-section">
+          <div class="flex items-center justify-center gap-2 mb-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-sage"></span>
+            <p class="font-display text-xs tracking-[0.28em] uppercase text-gold-dark font-semibold">
+              Sacred Venue
+            </p>
+            <span class="w-1.5 h-1.5 rounded-full bg-sage"></span>
+          </div>
+
+          <h2 class="font-serif text-2xl sm:text-3xl font-semibold text-charcoal mt-1">
+            St. Peter's and St. Paul's Orthodox Church
+          </h2>
+          <p class="font-serif italic text-lg sm:text-xl text-gold-dark mt-0.5">
+            Parumala, Kerala
+          </p>
+          <p class="text-xs sm:text-sm text-charcoal/70 max-w-md mx-auto mt-2 leading-relaxed">
+            Parumala Church P.O., Thiruvalla, Seminary, Parumala, Nirmalapuram, Kerala 689626, India
+          </p>
+
+          <div class="mt-6 rounded-3xl overflow-hidden border border-gold/50 shadow-gold bg-ivory p-1.5">
+            <div class="rounded-2xl overflow-hidden w-full h-60 sm:h-72 relative">
+              <iframe
+                title="Map to St. Peter's and St. Paul's Orthodox Church, Parumala"
+                src="https://maps.google.com/maps?q=Parumala+Church,+Parumala,+Kerala+689626,+India&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                class="w-full h-full border-0"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+              ></iframe>
+            </div>
+          </div>
+
+          <div class="mt-5">
+            <a
+              href="https://maps.app.goo.gl/jhFHJser48hxQfbd9"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-gold inline-flex items-center gap-2.5 text-white font-medium text-xs sm:text-sm tracking-wider uppercase px-7 py-3.5 rounded-full shadow-gold"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+              <span>Open in Google Maps</span>
+            </a>
+          </div>
+        </section>
+
+        <div class="flex items-center justify-center gap-3 my-8">
+          <span class="h-[1px] w-16 sm:w-24 bg-gradient-to-r from-transparent to-gold/60"></span>
+          <span class="w-2 h-2 rotate-45 bg-sage"></span>
+          <span class="h-[1px] w-16 sm:w-24 bg-gradient-to-l from-transparent to-gold/60"></span>
+        </div>
+
+        <!-- 4. INTERACTIVE RSVP SECTION -->
+        <section id="rsvp-section" class="my-8 sm:my-10 reveal-section">
+          <div class="text-center mb-7">
+            <p class="font-serif italic text-2xl sm:text-3xl text-charcoal">
+              “We appreciate your presence”
+            </p>
+            <p class="font-display text-xs tracking-[0.28em] uppercase text-gold-dark font-semibold mt-2">
+              Kindly Confirm Your Attendance
+            </p>
+          </div>
+
+          <div class="bg-ivory/95 border border-gold/45 rounded-3xl p-5 sm:p-8 shadow-sm relative">
+            <form id="rsvp-form" class="space-y-4 text-left" novalidate>
+              <div>
+                <label for="guest-name" class="block text-xs font-semibold uppercase tracking-wider text-charcoal/80 mb-1.5">
+                  Guest Full Name(s) <span class="text-gold-dark">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="guest-name"
+                  name="guestName"
+                  required
+                  placeholder="e.g., Thomas & Anna Mathew"
+                  class="w-full rounded-2xl border border-gold/40 bg-white px-4 py-3 text-sm text-charcoal placeholder:text-charcoal/35 focus:outline-none focus:border-gold-dark focus:ring-2 focus:ring-gold-light/50 transition"
+                />
+              </div>
+
+              <div>
+                <span class="block text-xs font-semibold uppercase tracking-wider text-charcoal/80 mb-1.5">
+                  Will You Join Us? <span class="text-gold-dark">*</span>
+                </span>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <label class="cursor-pointer">
+                    <input type="radio" name="attendance" value="Yes, Joyfully Accepts" class="peer sr-only" checked />
+                    <div class="rounded-2xl border border-gold/40 bg-white p-3.5 text-center transition peer-checked:border-gold-dark peer-checked:bg-gold-light/25 peer-checked:shadow-sm">
+                      <span class="block font-serif text-lg font-semibold text-charcoal">Yes, Joyfully Accepts</span>
+                      <span class="block text-[11px] text-sage-dark mt-0.5">We will be there to bless Neil</span>
+                    </div>
+                  </label>
+
+                  <label class="cursor-pointer">
+                    <input type="radio" name="attendance" value="No, Regretfully Declines" class="peer sr-only" />
+                    <div class="rounded-2xl border border-gold/40 bg-white p-3.5 text-center transition peer-checked:border-gold-dark peer-checked:bg-gold-light/25 peer-checked:shadow-sm">
+                      <span class="block font-serif text-lg font-semibold text-charcoal">No, Regretfully Declines</span>
+                      <span class="block text-[11px] text-charcoal/60 mt-0.5">Sending love &amp; prayers from afar</span>
+                    </div>
+                  </label>
+                </div>
+              </div>
+
+              <div>
+                <label for="guest-count" class="block text-xs font-semibold uppercase tracking-wider text-charcoal/80 mb-1.5">
+                  Number of Guests
+                </label>
+                <select
+                  id="guest-count"
+                  name="guestCount"
+                  class="w-full rounded-2xl border border-gold/40 bg-white px-4 py-3 text-sm text-charcoal focus:outline-none focus:border-gold-dark focus:ring-2 focus:ring-gold-light/50 transition"
+                >
+                  <option value="1 Guest">1 Guest</option>
+                  <option value="2 Guests" selected>2 Guests</option>
+                  <option value="3 Guests">3 Guests</option>
+                  <option value="4 Guests">4 Guests</option>
+                  <option value="5 Guests">5 Guests</option>
+                  <option value="6+ Guests">6+ Guests (Family)</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="guest-wishes" class="block text-xs font-semibold uppercase tracking-wider text-charcoal/80 mb-1.5">
+                  Blessing / Note for Neil
+                </label>
+                <textarea
+                  id="guest-wishes"
+                  name="guestWishes"
+                  rows="3"
+                  placeholder="Write a warm prayer or blessing for little Neil..."
+                  class="w-full rounded-2xl border border-gold/40 bg-white px-4 py-3 text-sm text-charcoal placeholder:text-charcoal/35 focus:outline-none focus:border-gold-dark focus:ring-2 focus:ring-gold-light/50 transition resize-none"
+                ></textarea>
+              </div>
+
+              <div class="pt-3 flex justify-center">
+                <button
+                  type="submit"
+                  class="btn-gold w-full sm:w-auto min-w-[240px] inline-flex items-center justify-center gap-2 text-white font-semibold text-xs sm:text-sm tracking-wider uppercase px-8 py-3.5 rounded-full shadow-gold"
+                >
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span>Confirm RSVP</span>
+                </button>
+              </div>
+            </form>
+
+            <div id="rsvp-confirmation" class="hidden text-center py-6 space-y-4">
+              <div class="w-16 h-16 mx-auto rounded-full bg-gold-light/40 border border-gold flex items-center justify-center text-gold-dark shadow-sm">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              <h3 class="font-serif text-2xl sm:text-3xl font-semibold text-charcoal">
+                Thank You, <span id="confirm-guest-name" class="text-gold-dark">Guest</span>!
+              </h3>
+              <p class="text-xs sm:text-sm text-charcoal/75 max-w-md mx-auto leading-relaxed">
+                With heartfelt gratitude from <strong>Moyna &amp; Sajan</strong>, your RSVP for the Baptism of <strong>Neil Sajan</strong> has been received.
+              </p>
+              <div id="rsvp-summary" class="bg-white border border-gold/35 rounded-2xl p-4 max-w-md mx-auto text-left text-xs space-y-1.5 shadow-sm"></div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Toast Helper
+    function showToast(msg) {
+      const toast = document.getElementById('toast-banner');
+      const text = document.getElementById('toast-message');
+      text.textContent = msg;
+      toast.classList.remove('opacity-0', 'translate-y-4', 'pointer-events-none');
+      toast.classList.add('opacity-100', 'translate-y-0');
+      clearTimeout(window.__toastTimer);
+      window.__toastTimer = setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-4', 'pointer-events-none');
+        toast.classList.remove('opacity-100', 'translate-y-0');
+      }, 3000);
+    }
+
+    // Custom Music Toggle
+    const musicBtn = document.getElementById('music-toggle-btn');
+    const musicLabel = document.getElementById('music-label');
+    const audioEl = document.getElementById('custom-music');
+    let isPlaying = false;
+
+    musicBtn.addEventListener('click', async () => {
+      if (!isPlaying) {
+        try {
+          await audioEl.play();
+          isPlaying = true;
+          musicLabel.textContent = 'Music On';
+          showToast('Playing background music');
+        } catch (err) {
+          showToast('Check music file path or allow audio playback');
+        }
+      } else {
+        audioEl.pause();
+        isPlaying = false;
+        musicLabel.textContent = 'Music Off';
+        showToast('Music paused');
+      }
+    });
+
+    // Countdown to Nov 30, 2026 7:00 AM IST (+05:30)
+    const targetDate = new Date('2026-11-30T07:00:00+05:30').getTime();
+    function updateCountdown() {
+      const now = Date.now();
+      const diff = Math.max(0, targetDate - now);
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+
+      document.getElementById('cd-days').textContent = String(days).padStart(2, '0');
+      document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
+      document.getElementById('cd-minutes').textContent = String(minutes).padStart(2, '0');
+      document.getElementById('cd-seconds').textContent = String(seconds).padStart(2, '0');
+    }
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    // Download .ICS Invite
+    document.getElementById('download-ics-btn').addEventListener('click', () => {
+      const ics = [
+        'BEGIN:VCALENDAR',
+        'VERSION:2.0',
+        'BEGIN:VEVENT',
+        'DTSTART:20261130T013000Z',
+        'DTEND:20261130T033000Z',
+        'SUMMARY:Baptism of Neil Sajan',
+        'LOCATION:St. Peter\'s and St. Paul\'s Orthodox Church, Parumala, Kerala 689626, India',
+        'DESCRIPTION:Holy Baptism of Neil Sajan hosted by Moyna & Sajan.',
+        'END:VEVENT',
+        'END:VCALENDAR'
+      ].join('\r\n');
+      const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'Baptism-of-Neil-Sajan.ics';
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('Calendar invite downloaded');
+    });
+
+    // Share Button
+    document.getElementById('share-invite-btn').addEventListener('click', async () => {
+      const shareData = {
+        title: 'Baptism of Neil Sajan',
+        text: 'You are invited to the Holy Baptism of Neil Sajan on Monday, 30 November 2026.',
+        url: window.location.href
+      };
+      if (navigator.share) {
+        try {
+          await navigator.share(shareData);
+          return;
+        } catch (_) {}
+      }
+      navigator.clipboard?.writeText(window.location.href);
+      showToast('Link copied to clipboard');
+    });
+
+    // RSVP Form Handling
+    document.getElementById('rsvp-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const nameInput = document.getElementById('guest-name');
+      const name = nameInput.value.trim();
+      if (!name) {
+        nameInput.focus();
+        showToast('Please enter your name');
+        return;
+      }
+      const attendance = document.querySelector('input[name="attendance"]:checked').value;
+      const count = document.getElementById('guest-count').value;
+      const wishes = document.getElementById('guest-wishes').value.trim();
+
+      document.getElementById('confirm-guest-name').textContent = name;
+      document.getElementById('rsvp-summary').innerHTML = `
+        <div><strong>Response:</strong> ${attendance}</div>
+        <div><strong>Guests:</strong> ${count}</div>
+        ${wishes ? `<div><strong>Blessing:</strong> "${wishes}"</div>` : ''}
+      `;
+      e.target.classList.add('hidden');
+      document.getElementById('rsvp-confirmation').classList.remove('hidden');
+      showToast('RSVP confirmed!');
+    });
+
+    // Reveal on Scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) entry.target.classList.add('is-visible');
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal-section').forEach((el) => observer.observe(el));
+
+    // Gold Dust Canvas
+    const canvas = document.getElementById('gold-dust-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    for (let i = 0; i < 32; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 2 + 0.6,
+        vy: Math.random() * 0.4 + 0.15,
+        alpha: Math.random() * 0.5 + 0.2
+      });
+    }
+
+    function drawDust() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach((p) => {
+        p.y -= p.vy;
+        if (p.y < -10) {
+          p.y = canvas.height + 10;
+          p.x = Math.random() * canvas.width;
+        }
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(212, 175, 55, ${p.alpha})`;
+        ctx.fill();
+      });
+      requestAnimationFrame(drawDust);
+    }
+    drawDust();
+  </script>
+</body>
+</html>
