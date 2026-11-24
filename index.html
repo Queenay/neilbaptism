@@ -629,9 +629,38 @@
       showToast('Link copied to clipboard');
     });
 
+    // Google Form connection
+    const GFORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSemk6JYYatmJOGm5IvSWCsxjJArnqLKJ777XV7t0p89ACLbFg/formResponse';
+    const GFORM_FIELDS = {
+      name: 'entry.29399135',
+      attendance: 'entry.153569148',
+      guests: 'entry.1073718235',
+      wishes: 'entry.1773192410'
+    };
+    
+    async function sendToGoogleForm({ name, attendance, count, wishes }) {
+      const body = new URLSearchParams();
+      body.append(GFORM_FIELDS.name, name);
+      body.append(GFORM_FIELDS.attendance, attendance);
+      body.append(GFORM_FIELDS.guests, count);
+      if (wishes) body.append(GFORM_FIELDS.wishes, wishes);
+    
+      try {
+        await fetch(GFORM_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: body.toString()
+        });
+      } catch (err) {
+        console.error('RSVP send failed', err);
+      }
+    }
+    
     // RSVP Form Handling
-    document.getElementById('rsvp-form').addEventListener('submit', (e) => {
+    document.getElementById('rsvp-form').addEventListener('submit', async (e) => {
       e.preventDefault();
+      const form = e.target;
       const nameInput = document.getElementById('guest-name');
       const name = nameInput.value.trim();
       if (!name) {
@@ -642,15 +671,21 @@
       const attendance = document.querySelector('input[name="attendance"]:checked').value;
       const count = document.getElementById('guest-count').value;
       const wishes = document.getElementById('guest-wishes').value.trim();
-
+    
+      const submitBtn = form.querySelector('button[type="submit"]');
+      submitBtn.disabled = true;
+    
+      await sendToGoogleForm({ name, attendance, count, wishes });
+    
       document.getElementById('confirm-guest-name').textContent = name;
       document.getElementById('rsvp-summary').innerHTML = `
         <div><strong>Response:</strong> ${attendance}</div>
         <div><strong>Guests:</strong> ${count}</div>
         ${wishes ? `<div><strong>Blessing:</strong> "${wishes}"</div>` : ''}
       `;
-      e.target.classList.add('hidden');
+      form.classList.add('hidden');
       document.getElementById('rsvp-confirmation').classList.remove('hidden');
+      submitBtn.disabled = false;
       showToast('RSVP confirmed!');
     });
 
