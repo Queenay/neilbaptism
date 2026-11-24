@@ -203,6 +203,27 @@
   <audio id="custom-music" src="song.mp3" loop preload="metadata"></audio>
 
   <canvas id="gold-dust-canvas" aria-hidden="true"></canvas>
+  
+  <div
+  id="welcome-overlay"
+  class="fixed inset-0 z-[60] flex flex-col items-center justify-center bg-ivory text-center px-6 transition-opacity duration-700"
+>
+  <svg class="w-8 h-10 text-gold-rich mb-5" viewBox="0 0 36 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 2V46M7 15H29" stroke="#C5A059" stroke-width="2.2" stroke-linecap="round"/>
+    <circle cx="18" cy="15" r="2.2" fill="#F3E5AB" stroke="#C5A059" stroke-width="1"/>
+  </svg>
+  <p class="font-display text-[11px] sm:text-xs tracking-[0.32em] uppercase text-gold-dark font-medium">
+    You are invited
+  </p>
+  <h2 class="font-script text-6xl sm:text-7xl text-gold-dark py-3 leading-[1.35]">Neil Sajan</h2>
+  <button
+    id="welcome-open-btn"
+    type="button"
+    class="btn-gold mt-4 text-white font-semibold text-xs sm:text-sm tracking-wider uppercase px-8 py-3.5 rounded-full shadow-gold"
+  >
+    Open Invitation
+  </button>
+</div>
 
   <header class="fixed top-0 inset-x-0 z-40 pointer-events-none px-4 py-3 sm:px-8 sm:py-4 flex items-center justify-between max-w-5xl mx-auto">
     <button
@@ -618,25 +639,41 @@
     const musicLabel = document.getElementById('music-label');
     const audioEl = document.getElementById('custom-music');
     let isPlaying = false;
-
+    
+    function setMusicState(on) {
+      isPlaying = on;
+      musicLabel.textContent = on ? 'Music On' : 'Music Off';
+    }
+    
+    async function startMusic() {
+      try {
+        await audioEl.play();
+        setMusicState(true);
+        return true;
+      } catch (err) {
+        return false;
+      }
+    }
+    
+    // Welcome screen: the tap unlocks audio, so the music starts as the invitation opens
+    const overlay = document.getElementById('welcome-open-btn').closest('#welcome-overlay');
+    document.getElementById('welcome-open-btn').addEventListener('click', () => {
+      startMusic();
+      overlay.classList.add('opacity-0', 'pointer-events-none');
+      setTimeout(() => overlay.remove(), 800);
+    });
+    
     musicBtn.addEventListener('click', async () => {
-      if (!isPlaying) {
-        try {
-          await audioEl.play();
-          isPlaying = true;
-          musicLabel.textContent = 'Music On';
-          showToast('Playing background music');
-        } catch (err) {
-          showToast('Check music file path or allow audio playback');
-        }
-      } else {
+      if (isPlaying) {
         audioEl.pause();
-        isPlaying = false;
-        musicLabel.textContent = 'Music Off';
+        setMusicState(false);
         showToast('Music paused');
+      } else if (await startMusic()) {
+        showToast('Playing background music');
+      } else {
+        showToast('Check music file path or allow audio playback');
       }
     });
-
     // Countdown to Nov 30, 2026 7:00 AM IST (+05:30)
     const targetDate = new Date('2026-11-30T07:00:00+05:30').getTime();
     function updateCountdown() {
@@ -680,40 +717,64 @@
     });
 
     // Download Invitation as Image
+    async function imageToDataURL(src) {
+      const res = await fetch(src, { cache: 'no-store' });
+      if (!res.ok) throw new Error('Photo not found');
+      const blob = await res.blob();
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(blob);
+      });
+    }
+    
     document.getElementById('download-invite-btn').addEventListener('click', async () => {
       const target = document.querySelector('main > div');
       showToast('Preparing your image...');
       try {
+        const photoEl = document.getElementById('baby-portrait-img');
+        const photoData = await imageToDataURL(photoEl.src);
+    
         const canvas = await html2canvas(target, {
           scale: 2,
           useCORS: true,
           backgroundColor: '#FDFCFA',
-          // Leave out the map, the Maps button and the RSVP form
           ignoreElements: (el) =>
             el.tagName === 'IFRAME' ||
             el.id === 'rsvp-section' ||
             el.classList.contains('no-print'),
           onclone: (doc) => {
-            // Show every section (the scroll animation would otherwise hide some)
+            // Swap the <img> for a div with the photo as a cropped background
+            const img = doc.getElementById('baby-portrait-img');
+            if (img) {
+              const div = doc.createElement('div');
+              div.style.width = '100%';
+              div.style.height = '100%';
+              div.style.backgroundImage = `url("${photoData}")`;
+              div.style.backgroundSize = 'cover';
+              div.style.backgroundPosition = 'center';
+              img.parentNode.replaceChild(div, img);
+            }
+    
             doc.querySelectorAll('.reveal-section').forEach((el) => {
               el.style.opacity = '1';
               el.style.transform = 'none';
               el.style.transition = 'none';
             });
-            // html2canvas can't draw gradient-filled text, so use solid gold
             doc.querySelectorAll('.gold-foil-text').forEach((el) => {
               el.style.background = 'none';
               el.style.webkitTextFillColor = '#B8923F';
               el.style.color = '#B8923F';
               el.style.animation = 'none';
             });
-            // Blurred corner glows would show up as hard-edged circles, so remove them
             doc.querySelectorAll('.blur-3xl').forEach((el) => el.remove());
             doc.querySelectorAll('.animate-spin-slow, .animate-float').forEach((el) => {
               el.style.animation = 'none';
             });
           }
         });
+    
         const link = document.createElement('a');
         link.download = 'Baptism-of-Neil-Sajan-Invitation.png';
         link.href = canvas.toDataURL('image/png');
