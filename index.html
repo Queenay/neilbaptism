@@ -196,108 +196,6 @@
   }
 }    
   </style>
-
-  /* ---------- Envelope welcome screen ---------- */
-#welcome-overlay {
-  background-color: #FDFCFA;
-  background-image:
-    radial-gradient(circle at 15% 15%, rgba(243, 229, 171, 0.35) 0%, transparent 45%),
-    radial-gradient(circle at 85% 85%, rgba(122, 154, 126, 0.15) 0%, transparent 45%);
-}
-
-.env-scene {
-  perspective: 1200px;
-}
-
-.envelope {
-  position: relative;
-  width: min(86vw, 340px);
-  aspect-ratio: 5 / 4;
-  transform-style: preserve-3d;
-  transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.envelope.is-flipped {
-  transform: rotateY(180deg);
-}
-
-.env-face {
-  position: absolute;
-  inset: 0;
-  border-radius: 10px;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-}
-
-.env-front {
-  background: linear-gradient(135deg, #FFFBEF 0%, #F6EBC4 100%);
-  border: 1px solid rgba(197, 160, 89, 0.65);
-  box-shadow: 0 20px 50px -10px rgba(197, 160, 89, 0.4);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 1rem;
-}
-
-.env-back {
-  transform: rotateY(180deg);
-  perspective: 900px;
-  background: linear-gradient(135deg, #F3E5AB 0%, #E3C877 100%);
-  border: 1px solid rgba(197, 160, 89, 0.8);
-  box-shadow: 0 20px 50px -10px rgba(197, 160, 89, 0.4);
-}
-
-.env-card {
-  position: absolute;
-  left: 7%;
-  right: 7%;
-  top: 8%;
-  bottom: 8%;
-  background: #FFFFFF;
-  border: 1px solid rgba(197, 160, 89, 0.6);
-  border-radius: 6px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  z-index: 1;
-  transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.45s;
-}
-
-.env-pocket {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  border-radius: 10px;
-  background: linear-gradient(160deg, #F0DC9A 0%, #D9B95E 100%);
-  clip-path: polygon(0 0, 50% 55%, 100% 0, 100% 100%, 0 100%);
-}
-
-.env-flap {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 55%;
-  z-index: 3;
-  background: linear-gradient(180deg, #E8CF85 0%, #D4B14F 100%);
-  clip-path: polygon(0 0, 100% 0, 50% 100%);
-  transform-origin: top center;
-  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1), z-index 0s 0.35s;
-}
-
-.envelope.is-open .env-flap {
-  transform: rotateX(180deg);
-  z-index: 0;
-}
-
-.envelope.is-open .env-card {
-  transform: translateY(-38%);
-}
-  
 </head>
 <body class="font-sans antialiased selection:bg-gold-light selection:text-charcoal relative min-h-screen">
 
@@ -308,44 +206,24 @@
   
   <div
   id="welcome-overlay"
-  class="fixed inset-0 z-[60] flex items-center justify-center bg-ivory px-6 overflow-hidden transition-opacity duration-700"
+  class="fixed inset-0 z-[60] flex flex-col items-center justify-center bg-ivory text-center px-6 transition-opacity duration-700"
 >
-  <div class="env-scene">
-    <div id="envelope" class="envelope">
-
-      <!-- FRONT: the written side -->
-      <div class="env-face env-front">
-        <svg class="w-5 h-7 mb-2" viewBox="0 0 36 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M18 2V46M7 15H29" stroke="#9E7B34" stroke-width="2.4" stroke-linecap="round"/>
-          <circle cx="18" cy="15" r="2.2" fill="#F3E5AB" stroke="#9E7B34" stroke-width="1"/>
-        </svg>
-        <p class="font-serif italic text-lg sm:text-xl text-charcoal/85 leading-snug">
-          You&rsquo;re invited to the<br />baptism ceremony of
-        </p>
-        <p class="font-script text-5xl sm:text-6xl text-gold-dark leading-[1.3] pb-1">Neil Sajan</p>
-        <button
-          id="welcome-open-btn"
-          type="button"
-          class="btn-gold mt-2 text-white font-semibold text-[11px] sm:text-xs tracking-wider uppercase px-6 py-3 rounded-full shadow-gold"
-        >
-          Open Invitation
-        </button>
-      </div>
-
-      <!-- BACK: flap, card and pocket -->
-      <div class="env-face env-back">
-        <div class="env-card">
-          <p class="font-display text-[9px] tracking-[0.3em] uppercase text-gold-dark">Holy Baptism</p>
-          <p class="font-script text-4xl text-gold-dark leading-[1.3]">Neil Sajan</p>
-        </div>
-        <div class="env-pocket"></div>
-        <div class="env-flap"></div>
-      </div>
-
-    </div>
-  </div>
+  <svg class="w-8 h-10 text-gold-rich mb-5" viewBox="0 0 36 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 2V46M7 15H29" stroke="#C5A059" stroke-width="2.2" stroke-linecap="round"/>
+    <circle cx="18" cy="15" r="2.2" fill="#F3E5AB" stroke="#C5A059" stroke-width="1"/>
+  </svg>
+  <p class="font-display text-[11px] sm:text-xs tracking-[0.32em] uppercase text-gold-dark font-medium">
+    You are invited
+  </p>
+  <h2 class="font-script text-6xl sm:text-7xl text-gold-dark py-3 leading-[1.35]">Neil Sajan</h2>
+  <button
+    id="welcome-open-btn"
+    type="button"
+    class="btn-gold mt-4 text-white font-semibold text-xs sm:text-sm tracking-wider uppercase px-8 py-3.5 rounded-full shadow-gold"
+  >
+    Open Invitation
+  </button>
 </div>
-
 
   <header class="fixed top-0 inset-x-0 z-40 pointer-events-none px-4 py-3 sm:px-8 sm:py-4 flex items-center justify-between max-w-5xl mx-auto">
     <button
@@ -777,21 +655,12 @@
       }
     }
     
-    // Envelope welcome screen: the tap unlocks audio, then the envelope turns, opens and fades away
-    const welcomeOverlay = document.getElementById('welcome-overlay');
-    const envelopeEl = document.getElementById('envelope');
-    const welcomeOpenBtn = document.getElementById('welcome-open-btn');
-    let envelopeOpening = false;
-    
-    welcomeOpenBtn.addEventListener('click', () => {
-      if (envelopeOpening) return;
-      envelopeOpening = true;
+    // Welcome screen: the tap unlocks audio, so the music starts as the invitation opens
+    const overlay = document.getElementById('welcome-open-btn').closest('#welcome-overlay');
+    document.getElementById('welcome-open-btn').addEventListener('click', () => {
       startMusic();
-    
-      envelopeEl.classList.add('is-flipped');                                   // 1. turn around
-      setTimeout(() => envelopeEl.classList.add('is-open'), 1000);              // 2. flap opens, card rises
-      setTimeout(() => welcomeOverlay.classList.add('opacity-0', 'pointer-events-none'), 2700); // 3. fade to invitation
-      setTimeout(() => welcomeOverlay.remove(), 3500);
+      overlay.classList.add('opacity-0', 'pointer-events-none');
+      setTimeout(() => overlay.remove(), 800);
     });
     
     musicBtn.addEventListener('click', async () => {
