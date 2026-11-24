@@ -144,6 +144,54 @@
       background: #D4AF37;
       border-radius: 9999px;
     }
+    @page {
+  size: A4;
+  margin: 10mm;
+}
+
+@media print {
+  * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  body {
+    background-image: none !important;
+  }
+
+  /* Hide things that don't belong in a saved invitation */
+  header,
+  #toast-banner,
+  #gold-dust-canvas,
+  iframe,
+  #rsvp-section,
+  .blur-3xl {
+    display: none !important;
+  }
+
+  /* Show every section (the scroll animation would otherwise hide some) */
+  .reveal-section {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .animate-spin-slow,
+  .animate-float,
+  .gold-foil-text {
+    animation: none !important;
+  }
+
+  main {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+
+  /* Keep sections from splitting across pages */
+  section {
+    break-inside: avoid;
+  }
+}    
   </style>
 </head>
 <body class="font-sans antialiased selection:bg-gold-light selection:text-charcoal relative min-h-screen">
@@ -531,7 +579,6 @@
     </div>
   </main>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script>
     // Toast Helper
     function showToast(msg) {
@@ -613,43 +660,10 @@
       showToast('Calendar invite downloaded');
     });
 
-    // Download Invitation as Image
-    document.getElementById('download-invite-btn').addEventListener('click', async () => {
-      const target = document.querySelector('main > div');
-      showToast('Preparing your download...');
-      try {
-        const canvas = await html2canvas(target, {
-          scale: 2,
-          useCORS: true,
-          backgroundColor: '#FDFCFA',
-          // Leave out the map and the RSVP form; they don't belong in a saved invitation
-          ignoreElements: (el) => el.tagName === 'IFRAME' || el.id === 'rsvp-section',
-          onclone: (doc) => {
-            doc.querySelectorAll('.reveal-section').forEach((el) => {
-              el.style.opacity = '1';
-              el.style.transform = 'none';
-              el.style.transition = 'none';
-            });
-            // html2canvas can't draw gradient-filled text, so use a solid gold instead
-            doc.querySelectorAll('.gold-foil-text').forEach((el) => {
-              el.style.background = 'none';
-              el.style.webkitTextFillColor = '#B8923F';
-              el.style.color = '#B8923F';
-              el.style.animation = 'none';
-            });
-            doc.querySelectorAll('.animate-spin-slow, .animate-float').forEach((el) => {
-              el.style.animation = 'none';
-            });
-          }
-        });
-        const link = document.createElement('a');
-        link.download = 'Baptism-of-Neil-Sajan-Invitation.png';
-        link.href = canvas.toDataURL('image/png');
-        link.click();
-        showToast('Invitation downloaded');
-      } catch (err) {
-        showToast('Could not create the image. Try again.');
-      }
+    // Download Invitation as PDF
+    document.getElementById('download-invite-btn').addEventListener('click', () => {
+      showToast('Choose "Save as PDF" as the destination');
+      setTimeout(() => window.print(), 600);
     });
    
     // Google Form connection
