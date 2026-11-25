@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Baptism of Neil Sajan — Invitation</title>
 
-  <!-- Google Fonts: Cinzel, Cormorant Garamond, Great Vibes & Montserrat -->
+  <!-- Google Fonts: Cinzel, Cormorant Garamond, Lavishly Yours & Montserrat -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Lavishly+Yours&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
- 
+
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
 
@@ -144,86 +144,86 @@
       background: #D4AF37;
       border-radius: 9999px;
     }
+
     @page {
-  size: A4;
-  margin: 10mm;
-}
+      size: A4;
+      margin: 10mm;
+    }
 
-@media print {
-  * {
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-  }
+    @media print {
+      * {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
 
-  body {
-    background-image: none !important;
-  }
+      body {
+        background-image: none !important;
+      }
 
-  /* Hide things that don't belong in a saved invitation */
-  header,
-  #toast-banner,
-  #gold-dust-canvas,
-  iframe,
-  #rsvp-section,
-  .blur-3xl {
-    display: none !important;
-  }
+      header,
+      #toast-banner,
+      #gold-dust-canvas,
+      iframe,
+      #rsvp-section,
+      .blur-3xl {
+        display: none !important;
+      }
 
-  /* Show every section (the scroll animation would otherwise hide some) */
-  .reveal-section {
-    opacity: 1 !important;
-    transform: none !important;
-    transition: none !important;
-  }
+      .reveal-section {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+      }
 
-  .animate-spin-slow,
-  .animate-float,
-  .gold-foil-text {
-    animation: none !important;
-  }
+      .animate-spin-slow,
+      .animate-float,
+      .gold-foil-text {
+        animation: none !important;
+      }
 
-  main {
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-  }
+      main {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+      }
 
-  /* Keep sections from splitting across pages */
-  section {
-    break-inside: avoid;
-  }
-  .no-print {
-    display: none !important;
-  }
-}    
+      section {
+        break-inside: avoid;
+      }
+
+      .no-print {
+        display: none !important;
+      }
+    }
   </style>
 </head>
 <body class="font-sans antialiased selection:bg-gold-light selection:text-charcoal relative min-h-screen">
 
-  <!-- Custom Background Music Element (replace src with your .mp3 / .m4a URL or repo path) -->
+  <!-- Background music (song.mp3 sits next to index.html in the repo) -->
   <audio id="custom-music" src="song.mp3" loop preload="metadata"></audio>
 
   <canvas id="gold-dust-canvas" aria-hidden="true"></canvas>
-  
+
+  <!-- Welcome screen -->
   <div
-  id="welcome-overlay"
-  class="fixed inset-0 z-[60] flex flex-col items-center justify-center bg-ivory text-center px-6 transition-opacity duration-700"
->
-  <svg class="w-8 h-10 text-gold-rich mb-5" viewBox="0 0 36 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M18 2V46M7 15H29" stroke="#C5A059" stroke-width="2.2" stroke-linecap="round"/>
-    <circle cx="18" cy="15" r="2.2" fill="#F3E5AB" stroke="#C5A059" stroke-width="1"/>
-  </svg>
-  <p class="font-display text-[11px] sm:text-xs tracking-[0.32em] uppercase text-gold-dark font-medium">
-    You are invited to the holy baptism of
-  </p>
-  <h2 class="font-script text-6xl sm:text-7xl text-gold-dark py-3 leading-[1.35]">Neil Sajan</h2>
-  <button
-    id="welcome-open-btn"
-    type="button"
-    class="btn-gold mt-4 text-white font-semibold text-xs sm:text-sm tracking-wider uppercase px-8 py-3.5 rounded-full shadow-gold"
+    id="welcome-overlay"
+    class="fixed inset-0 z-[60] flex flex-col items-center justify-center bg-ivory text-center px-6 transition-opacity duration-700"
   >
-    Open Invitation
-  </button>
-</div>
+    <svg class="w-8 h-10 text-gold-rich mb-5" viewBox="0 0 36 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M18 2V46M7 15H29" stroke="#C5A059" stroke-width="2.2" stroke-linecap="round"/>
+      <circle cx="18" cy="15" r="2.2" fill="#F3E5AB" stroke="#C5A059" stroke-width="1"/>
+    </svg>
+    <p class="font-display text-[11px] sm:text-xs tracking-[0.32em] uppercase text-gold-dark font-medium">
+      You are invited to the holy baptism of
+    </p>
+    <h2 class="font-script text-6xl sm:text-7xl text-gold-dark py-3 leading-[1.35]">Neil Sajan</h2>
+    <button
+      id="welcome-open-btn"
+      type="button"
+      class="btn-gold mt-4 text-white font-semibold text-xs sm:text-sm tracking-wider uppercase px-8 py-3.5 rounded-full shadow-gold"
+    >
+      Open Invitation
+    </button>
+  </div>
 
   <header class="fixed top-0 inset-x-0 z-40 pointer-events-none px-4 py-3 sm:px-8 sm:py-4 flex items-center justify-between max-w-5xl mx-auto">
     <button
@@ -241,16 +241,16 @@
     </button>
 
     <button
-    id="download-invite-btn"
-    type="button"
-    aria-label="Download invitation"
-    class="pointer-events-auto flex items-center gap-2 bg-white/90 backdrop-blur-md border border-gold/40 text-charcoal px-3.5 py-2 rounded-full shadow-sm hover:border-gold transition text-xs sm:text-sm font-medium"
-  >
-    <svg class="w-4 h-4 text-gold-dark" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-    </svg>
-    <span class="tracking-wide text-xs">Download</span>
-  </button>
+      id="auto-scroll-btn"
+      type="button"
+      aria-label="Toggle auto-scroll"
+      class="pointer-events-auto flex items-center gap-2 bg-white/90 backdrop-blur-md border border-gold/40 text-charcoal px-3.5 py-2 rounded-full shadow-sm hover:border-gold transition text-xs sm:text-sm font-medium"
+    >
+      <svg class="w-4 h-4 text-gold-dark" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+      </svg>
+      <span id="auto-scroll-label" class="tracking-wide text-xs">Auto-scroll Off</span>
+    </button>
   </header>
 
   <div
@@ -294,7 +294,7 @@
             </p>
           </div>
 
-          <div class="no-print relative w-64 h-64 sm:w-80 sm:h-80 mx-auto my-6 sm:my-8 flex items-center justify-center">
+          <div class="relative w-64 h-64 sm:w-80 sm:h-80 mx-auto my-6 sm:my-8 flex items-center justify-center">
             <div class="absolute inset-0 rounded-full border border-dashed border-gold/60 animate-spin-slow pointer-events-none"></div>
             <div class="absolute inset-2.5 rounded-full border border-gold/40 pointer-events-none"></div>
 
@@ -318,12 +318,12 @@
               <path d="M74 64C65 72 53 71 47 63C57 58 68 58 74 64Z" fill="#F3E5AB" fill-opacity="0.7" stroke="#C5A059" stroke-width="1.2"/>
             </svg>
 
-            <div class=" relative w-52 h-52 sm:w-64 sm:h-64 rounded-full p-1.5 bg-gradient-to-tr from-gold-dark via-gold-light to-gold-rich shadow-gold">
+            <div class="relative w-52 h-52 sm:w-64 sm:h-64 rounded-full p-1.5 bg-gradient-to-tr from-gold-dark via-gold-light to-gold-rich shadow-gold">
               <div class="w-full h-full rounded-full overflow-hidden bg-white relative">
                 <img
                   id="baby-portrait-img"
                   src="photo.jpeg"
-                  alt=""
+                  alt="Neil Sajan"
                   class="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-105"
                 />
                 <div class="absolute inset-0 rounded-full ring-1 ring-inset ring-gold/30 pointer-events-none"></div>
@@ -333,13 +333,13 @@
 
           <div class="space-y-2.5 mt-4 max-w-lg mx-auto">
             <p class="font-serif italic text-xl sm:text-2xl text-charcoal/85 tracking-wide leading-relaxed">
-              With joyful hearts, We invite you to the
+              With joyful hearts, we invite you to the
             </p>
             <p class="font-display text-sm sm:text-base tracking-[0.28em] uppercase text-gold-dark font-semibold">
               Holy Baptism of our beloved son
             </p>
             <h1 class="font-script text-6xl sm:text-7xl md:text-8xl gold-foil-text pt-2 pb-8 px-4 leading-[1.35] drop-shadow-sm">
-            Neil Sajan
+              Neil Sajan
             </h1>
           </div>
 
@@ -351,15 +351,14 @@
             <span class="h-[1px] w-16 sm:w-24 bg-gradient-to-l from-transparent via-gold/60 to-gold"></span>
           </div>
 
-          <div class="max-w-md mx-auto text-center">
-          <p class="font-serif italic text-lg sm:text-xl text-charcoal/80 leading-relaxed">
-            &ldquo;Let the little children come to me, and do not hinder them, for the kingdom of God belongs to such as these.&rdquo;
-          </p>
-          <p class="font-display text-[11px] tracking-[0.25em] uppercase text-gold-dark font-semibold mt-3">
-            Mark 10:14
-          </p>
-        </div>
-          
+          <div class="max-w-md mx-auto text-center mt-2">
+            <p class="font-serif italic text-lg sm:text-xl text-charcoal/80 leading-relaxed">
+              &ldquo;Let the little children come to me, and do not hinder them, for the kingdom of God belongs to such as these.&rdquo;
+            </p>
+            <p class="font-display text-[11px] tracking-[0.25em] uppercase text-gold-dark font-semibold mt-3">
+              Mark 10:14
+            </p>
+          </div>
         </section>
 
         <!-- 2. EVENT DATE, TIME & LIVE COUNTDOWN -->
@@ -393,7 +392,7 @@
               2026 &bull; AT 8:30 AM
             </p>
 
-            <div class="no-print mt-7 pt-6 border-t border-gold/25">
+            <div class="mt-7 pt-6 border-t border-gold/25">
               <p class="text-[11px] uppercase tracking-[0.22em] text-charcoal/60 mb-3.5 font-medium">
                 Counting Down to the Blessing
               </p>
@@ -417,9 +416,9 @@
               </div>
             </div>
 
-            <div class="no-print mt-7 flex flex-wrap items-center justify-center gap-3">
+            <div class="mt-7 flex flex-wrap items-center justify-center gap-3">
               <a
-                href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Baptism+of+Neil+Sajan&dates=20261130T013000Z/20261130T033000Z&details=Please+join+us+for+the+Holy+Baptism+of+Neil+Sajan.+We+appreciate+your+presence+and+blessings.&location=St.+Peter's+and+St.+Paul's+Orthodox+Church,+Parumala,+Kerala+689626,+India"
+                href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Baptism+of+Neil+Sajan&dates=20261130T030000Z/20261130T050000Z&details=Please+join+us+for+the+Holy+Baptism+of+Neil+Sajan.+We+appreciate+your+presence+and+blessings.&location=St.+Peter's+and+St.+Paul's+Orthodox+Church,+Parumala,+Kerala+689626,+India"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="inline-flex items-center gap-2 bg-white border border-gold text-charcoal hover:bg-gold-light/25 px-4 py-2.5 rounded-full text-xs sm:text-sm font-medium transition shadow-sm"
@@ -427,24 +426,13 @@
                 <svg class="w-4 h-4 text-gold-dark" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
-                <span>Google Calendar</span>
+                <span>Add to Google Calendar</span>
               </a>
-
-              <button
-                id="download-ics-btn"
-                type="button"
-                class="inline-flex items-center gap-2 bg-white border border-sage/50 text-sage-dark hover:bg-sage-light/40 px-4 py-2.5 rounded-full text-xs sm:text-sm font-medium transition shadow-sm"
-              >
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                </svg>
-                <span>Download .ICS Invite</span>
-              </button>
             </div>
           </div>
         </section>
 
-        <!-- 3. VENUE & INTERACTIVE GOOGLE MAP SECTION -->
+        <!-- 3. VENUE & MAP -->
         <section class="text-center my-10 sm:my-12 reveal-section">
           <div class="flex items-center justify-center gap-2 mb-2">
             <span class="w-1.5 h-1.5 rounded-full bg-sage"></span>
@@ -463,7 +451,8 @@
           <p class="text-xs sm:text-sm text-charcoal/70 max-w-md mx-auto mt-2 leading-relaxed">
             Parumala Church P.O., Thiruvalla, Seminary, Parumala, Nirmalapuram, Kerala 689626, India
           </p>
-          <div class="no-print mt-6 rounded-3xl overflow-hidden border border-gold/50 shadow-gold bg-ivory p-1.5">
+
+          <div class="mt-6 rounded-3xl overflow-hidden border border-gold/50 shadow-gold bg-ivory p-1.5">
             <div class="rounded-2xl overflow-hidden w-full h-60 sm:h-72 relative">
               <iframe
                 title="Map to St. Peter's and St. Paul's Orthodox Church, Parumala"
@@ -475,7 +464,7 @@
             </div>
           </div>
 
-          <div class="no-print mt-5">
+          <div class="mt-5">
             <a
               href="https://maps.app.goo.gl/jhFHJser48hxQfbd9"
               target="_blank"
@@ -491,17 +480,17 @@
           </div>
         </section>
 
-        <div class="no-print flex items-center justify-center gap-3 my-8">
+        <div class="flex items-center justify-center gap-3 my-8">
           <span class="h-[1px] w-16 sm:w-24 bg-gradient-to-r from-transparent to-gold/60"></span>
           <span class="w-2 h-2 rotate-45 bg-sage"></span>
           <span class="h-[1px] w-16 sm:w-24 bg-gradient-to-l from-transparent to-gold/60"></span>
         </div>
 
-        <!-- 4. INTERACTIVE RSVP SECTION -->
+        <!-- 4. RSVP -->
         <section id="rsvp-section" class="my-8 sm:my-10 reveal-section">
           <div class="text-center mb-7">
             <p class="font-serif italic text-2xl sm:text-3xl text-charcoal">
-              “We appreciate your presence”
+              &ldquo;We appreciate your presence&rdquo;
             </p>
             <p class="font-display text-xs tracking-[0.28em] uppercase text-gold-dark font-semibold mt-2">
               Kindly Confirm Your Attendance
@@ -601,15 +590,14 @@
                 Thank You, <span id="confirm-guest-name" class="text-gold-dark">Guest</span>!
               </h3>
               <p class="text-xs sm:text-sm text-charcoal/75 max-w-md mx-auto leading-relaxed">
-                With heartfelt gratitude from <strong>Moyna &amp; Sajan</strong>, your RSVP for the Baptism of <strong>Neil Sajan</strong> has been received.
+                With heartfelt gratitude from <strong>Moyna Sajan &amp; Sajan Kandathil Oommen</strong>, your RSVP for the Baptism of <strong>Neil Sajan</strong> has been received.
               </p>
               <div id="rsvp-summary" class="bg-white border border-gold/35 rounded-2xl p-4 max-w-md mx-auto text-left text-xs space-y-1.5 shadow-sm"></div>
             </div>
           </div>
         </section>
-        <!-- ========================================================= -->
-        <!-- 5. FOOTER BLESSING                                        -->
-        <!-- ========================================================= -->
+
+        <!-- 5. FOOTER BLESSING -->
         <footer class="text-center pt-6 pb-2 reveal-section">
           <div class="flex items-center justify-center gap-2 mb-3">
             <span class="h-[1px] w-12 bg-gold/40"></span>
@@ -628,9 +616,9 @@
       </div>
     </div>
   </main>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
   <script>
-    // Toast Helper
+    // ---------- Toast helper ----------
     function showToast(msg) {
       const toast = document.getElementById('toast-banner');
       const text = document.getElementById('toast-message');
@@ -644,17 +632,17 @@
       }, 3000);
     }
 
-    // Custom Music Toggle
+    // ---------- Music + welcome screen ----------
     const musicBtn = document.getElementById('music-toggle-btn');
     const musicLabel = document.getElementById('music-label');
     const audioEl = document.getElementById('custom-music');
     let isPlaying = false;
-    
+
     function setMusicState(on) {
       isPlaying = on;
       musicLabel.textContent = on ? 'Music On' : 'Music Off';
     }
-    
+
     async function startMusic() {
       try {
         await audioEl.play();
@@ -664,15 +652,16 @@
         return false;
       }
     }
-    
-    // Welcome screen: the tap unlocks audio, so the music starts as the invitation opens
-    const overlay = document.getElementById('welcome-open-btn').closest('#welcome-overlay');
-    document.getElementById('welcome-open-btn').addEventListener('click', () => {
+
+    // The tap on "Open Invitation" unlocks audio, so the music starts as the invitation opens
+    const welcomeOverlay = document.getElementById('welcome-overlay');
+    const welcomeBtn = document.getElementById('welcome-open-btn');
+    welcomeBtn.addEventListener('click', () => {
       startMusic();
-      overlay.classList.add('opacity-0', 'pointer-events-none');
-      setTimeout(() => overlay.remove(), 800);
+      welcomeOverlay.classList.add('opacity-0', 'pointer-events-none');
+      setTimeout(() => welcomeOverlay.remove(), 800);
     });
-    
+
     musicBtn.addEventListener('click', async () => {
       if (isPlaying) {
         audioEl.pause();
@@ -684,11 +673,11 @@
         showToast('Check music file path or allow audio playback');
       }
     });
-    // Countdown to Nov 30, 2026 8:30 AM IST (+05:30)
+
+    // ---------- Countdown to Nov 30, 2026 8:30 AM IST (+05:30) ----------
     const targetDate = new Date('2026-11-30T08:30:00+05:30').getTime();
     function updateCountdown() {
-      const now = Date.now();
-      const diff = Math.max(0, targetDate - now);
+      const diff = Math.max(0, targetDate - Date.now());
       const days = Math.floor(diff / (1000 * 60 * 60 * 24));
       const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
       const minutes = Math.floor((diff / (1000 * 60)) % 60);
@@ -702,99 +691,7 @@
     updateCountdown();
     setInterval(updateCountdown, 1000);
 
-    // Download .ICS Invite
-    document.getElementById('download-ics-btn').addEventListener('click', () => {
-      const ics = [
-        'BEGIN:VCALENDAR',
-        'VERSION:2.0',
-        'BEGIN:VEVENT',
-        'DTSTART:20261130T030000Z',
-        'DTEND:20261130T050000Z',
-        'SUMMARY:Baptism of Neil Sajan',
-        'LOCATION:St. Peter\'s and St. Paul\'s Orthodox Church, Parumala, Kerala 689626, India',
-        'DESCRIPTION:Holy Baptism of Neil Sajan hosted by Moyna & Sajan.',
-        'END:VEVENT',
-        'END:VCALENDAR'
-      ].join('\r\n');
-      const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'Baptism-of-Neil-Sajan.ics';
-      a.click();
-      URL.revokeObjectURL(url);
-      showToast('Calendar invite downloaded');
-    });
-
-   // Download Invitation as Image
-    async function getCroppedPhoto(src, size = 800) {
-      const img = new Image();
-      img.src = src;
-      await img.decode();
-      // Centre-crop to a square, then shrink to 800x800
-      const side = Math.min(img.naturalWidth, img.naturalHeight);
-      const sx = (img.naturalWidth - side) / 2;
-      const sy = (img.naturalHeight - side) / 2;
-      const c = document.createElement('canvas');
-      c.width = c.height = size;
-      c.getContext('2d').drawImage(img, sx, sy, side, side, 0, 0, size, size);
-      return c.toDataURL('image/jpeg', 0.9);
-    }
-    
-    document.getElementById('download-invite-btn').addEventListener('click', async () => {
-      const target = document.querySelector('main > div');
-      showToast('Preparing your image...');
-      try {
-        const photoEl = document.getElementById('baby-portrait-img');
-        const photoData = await getCroppedPhoto(photoEl.currentSrc || photoEl.src);
-    
-        const canvas = await html2canvas(target, {
-          scale: 2,
-          useCORS: true,
-          backgroundColor: '#FDFCFA',
-          ignoreElements: (el) =>
-            el.tagName === 'IFRAME' ||
-            el.id === 'rsvp-section' ||
-            el.classList.contains('no-print'),
-          onclone: (doc) => {
-            // Use the pre-cropped photo; drop object-cover, hover zoom and transitions
-            const img = doc.getElementById('baby-portrait-img');
-            if (img) {
-              img.removeAttribute('class');
-              img.src = photoData;
-              img.style.cssText = 'display:block;width:100%;height:100%;';
-            }
-    
-            doc.querySelectorAll('.reveal-section').forEach((el) => {
-              el.style.opacity = '1';
-              el.style.transform = 'none';
-              el.style.transition = 'none';
-            });
-            doc.querySelectorAll('.gold-foil-text').forEach((el) => {
-              el.style.background = 'none';
-              el.style.webkitTextFillColor = '#B8923F';
-              el.style.color = '#B8923F';
-              el.style.animation = 'none';
-            });
-            doc.querySelectorAll('.blur-3xl').forEach((el) => el.remove());
-            doc.querySelectorAll('.animate-spin-slow, .animate-float').forEach((el) => {
-              el.style.animation = 'none';
-            });
-          }
-        });
-    
-        const link = document.createElement('a');
-        link.download = 'Baptism-of-Neil-Sajan-Invitation.png';
-        link.href = canvas.toDataURL('image/png');
-        link.click();
-        showToast('Invitation downloaded');
-      } catch (err) {
-        console.error(err);
-        showToast('Could not create the image. Try again.');
-      }
-    });
-       
-    // Google Form connection
+    // ---------- Google Form connection ----------
     const GFORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSemk6JYYatmJOGm5IvSWCsxjJArnqLKJ777XV7t0p89ACLbFg/formResponse';
     const GFORM_FIELDS = {
       name: 'entry.29399135',
@@ -802,14 +699,14 @@
       guests: 'entry.1073718235',
       wishes: 'entry.1773192410'
     };
-    
+
     async function sendToGoogleForm({ name, attendance, count, wishes }) {
       const body = new URLSearchParams();
       body.append(GFORM_FIELDS.name, name);
       body.append(GFORM_FIELDS.attendance, attendance);
       body.append(GFORM_FIELDS.guests, count);
       if (wishes) body.append(GFORM_FIELDS.wishes, wishes);
-    
+
       try {
         await fetch(GFORM_URL, {
           method: 'POST',
@@ -821,8 +718,8 @@
         console.error('RSVP send failed', err);
       }
     }
-    
-    // RSVP Form Handling
+
+    // ---------- RSVP form ----------
     document.getElementById('rsvp-form').addEventListener('submit', async (e) => {
       e.preventDefault();
       const form = e.target;
@@ -836,33 +733,42 @@
       const attendance = document.querySelector('input[name="attendance"]:checked').value;
       const count = document.getElementById('guest-count').value;
       const wishes = document.getElementById('guest-wishes').value.trim();
-    
+
       const submitBtn = form.querySelector('button[type="submit"]');
       submitBtn.disabled = true;
-    
+
       await sendToGoogleForm({ name, attendance, count, wishes });
-    
+
+      // Show the guest's own text safely (no HTML injection)
       document.getElementById('confirm-guest-name').textContent = name;
-      document.getElementById('rsvp-summary').innerHTML = `
-        <div><strong>Response:</strong> ${attendance}</div>
-        <div><strong>Guests:</strong> ${count}</div>
-        ${wishes ? `<div><strong>Blessing:</strong> "${wishes}"</div>` : ''}
-      `;
+      const summary = document.getElementById('rsvp-summary');
+      summary.textContent = '';
+      const rows = [['Response', attendance], ['Guests', count]];
+      if (wishes) rows.push(['Blessing', '\u201C' + wishes + '\u201D']);
+      rows.forEach(([label, value]) => {
+        const row = document.createElement('div');
+        const strong = document.createElement('strong');
+        strong.textContent = label + ': ';
+        row.appendChild(strong);
+        row.appendChild(document.createTextNode(value));
+        summary.appendChild(row);
+      });
+
       form.classList.add('hidden');
       document.getElementById('rsvp-confirmation').classList.remove('hidden');
       submitBtn.disabled = false;
       showToast('RSVP confirmed!');
     });
 
-    // Reveal on Scroll
-    const observer = new IntersectionObserver((entries) => {
+    // ---------- Reveal on scroll ----------
+    const revealObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) entry.target.classList.add('is-visible');
       });
     }, { threshold: 0.12 });
-    document.querySelectorAll('.reveal-section').forEach((el) => observer.observe(el));
+    document.querySelectorAll('.reveal-section').forEach((el) => revealObserver.observe(el));
 
-    // Gold Dust Canvas
+    // ---------- Gold dust canvas ----------
     const canvas = document.getElementById('gold-dust-canvas');
     const ctx = canvas.getContext('2d');
     let particles = [];
@@ -899,6 +805,63 @@
       requestAnimationFrame(drawDust);
     }
     drawDust();
+
+    // ---------- Auto-scroll ----------
+    const autoBtn = document.getElementById('auto-scroll-btn');
+    const autoLabel = document.getElementById('auto-scroll-label');
+    const SCROLL_SPEED = 40; // pixels per second: lower = slower
+    let autoScrolling = false;
+    let autoPos = 0;
+    let autoLast = null;
+
+    function setAutoLabel() {
+      autoLabel.textContent = autoScrolling ? 'Auto-scroll On' : 'Auto-scroll Off';
+    }
+
+    function autoStep(ts) {
+      if (!autoScrolling) return;
+      if (autoLast === null) { autoLast = ts; autoPos = window.scrollY; }
+      autoPos += SCROLL_SPEED * ((ts - autoLast) / 1000);
+      autoLast = ts;
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      window.scrollTo({ top: autoPos, behavior: 'instant' });
+      if (autoPos >= max) { stopAutoScroll(); return; }
+      requestAnimationFrame(autoStep);
+    }
+
+    function startAutoScroll() {
+      if (autoScrolling) return;
+      autoScrolling = true;
+      autoLast = null;
+      setAutoLabel();
+      requestAnimationFrame(autoStep);
+    }
+
+    function stopAutoScroll() {
+      autoScrolling = false;
+      setAutoLabel();
+    }
+
+    autoBtn.addEventListener('click', () => {
+      autoScrolling ? stopAutoScroll() : startAutoScroll();
+    });
+
+    // Stop when the visitor scrolls, touches or types (but not on the toggle button itself,
+    // otherwise tapping it to stop would immediately restart it)
+    function stopUnlessButton(e) {
+      if (autoBtn.contains(e.target)) return;
+      stopAutoScroll();
+    }
+    ['wheel', 'touchstart', 'keydown', 'mousedown'].forEach((evt) =>
+      window.addEventListener(evt, stopUnlessButton, { passive: true })
+    );
+    document.getElementById('rsvp-form').addEventListener('focusin', stopAutoScroll);
+
+    // Start a few seconds after the visitor opens the invitation
+    // (skipped if the device asks for reduced motion)
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      welcomeBtn.addEventListener('click', () => setTimeout(startAutoScroll, 2500));
+    }
   </script>
 </body>
 </html>
