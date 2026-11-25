@@ -716,17 +716,19 @@
       showToast('Calendar invite downloaded');
     });
 
-    // Download Invitation as Image
-    async function imageToDataURL(src) {
-      const res = await fetch(src, { cache: 'no-store' });
-      if (!res.ok) throw new Error('Photo not found');
-      const blob = await res.blob();
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = reject;
-        reader.readAsDataURL(blob);
-      });
+   // Download Invitation as Image
+    async function getCroppedPhoto(src, size = 800) {
+      const img = new Image();
+      img.src = src;
+      await img.decode();
+      // Centre-crop to a square, then shrink to 800x800
+      const side = Math.min(img.naturalWidth, img.naturalHeight);
+      const sx = (img.naturalWidth - side) / 2;
+      const sy = (img.naturalHeight - side) / 2;
+      const c = document.createElement('canvas');
+      c.width = c.height = size;
+      c.getContext('2d').drawImage(img, sx, sy, side, side, 0, 0, size, size);
+      return c.toDataURL('image/jpeg', 0.9);
     }
     
     document.getElementById('download-invite-btn').addEventListener('click', async () => {
@@ -734,7 +736,7 @@
       showToast('Preparing your image...');
       try {
         const photoEl = document.getElementById('baby-portrait-img');
-        const photoData = await imageToDataURL(photoEl.src);
+        const photoData = await getCroppedPhoto(photoEl.currentSrc || photoEl.src);
     
         const canvas = await html2canvas(target, {
           scale: 2,
@@ -745,16 +747,12 @@
             el.id === 'rsvp-section' ||
             el.classList.contains('no-print'),
           onclone: (doc) => {
-            // Swap the <img> for a div with the photo as a cropped background
+            // Use the pre-cropped photo; drop object-cover, hover zoom and transitions
             const img = doc.getElementById('baby-portrait-img');
             if (img) {
-              const div = doc.createElement('div');
-              div.style.width = '100%';
-              div.style.height = '100%';
-              div.style.backgroundImage = `url("${photoData}")`;
-              div.style.backgroundSize = 'cover';
-              div.style.backgroundPosition = 'center';
-              img.parentNode.replaceChild(div, img);
+              img.removeAttribute('class');
+              img.src = photoData;
+              img.style.cssText = 'display:block;width:100%;height:100%;';
             }
     
             doc.querySelectorAll('.reveal-section').forEach((el) => {
@@ -781,10 +779,11 @@
         link.click();
         showToast('Invitation downloaded');
       } catch (err) {
+        console.error(err);
         showToast('Could not create the image. Try again.');
       }
     });
-   
+       
     // Google Form connection
     const GFORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSemk6JYYatmJOGm5IvSWCsxjJArnqLKJ777XV7t0p89ACLbFg/formResponse';
     const GFORM_FIELDS = {
